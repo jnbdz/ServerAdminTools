@@ -1,4 +1,5 @@
 #!/bin/sh
+YEAR=$( date +%Y )
 mkdir $1
 cd $1
 git init
@@ -56,7 +57,7 @@ How to use
 -------
 
 
-Copyright (C) 2012 Jean-Nicolas Boulay ([http://jean-nicolas.com/](http://jean-nicolas.com/))
+Copyright (C) $YEAR Jean-Nicolas Boulay ([http://jean-nicolas.com/](http://jean-nicolas.com/))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -90,14 +91,39 @@ touch Source/$1-yui-compressed.js
 mkdir Docs
 touch Docs/$1.md
 touch package.yml
-echo "name:  $1
+echo "name: $1
 author: jnbdz
-current:  
-category:  
-tags:  []
-docs:  
-demo:  " >> package.yml;
-cd $1
-git add *
-git commit -m "First Commit"
+current: 
+category: 
+tags: []
+docs: 
+demo: " >> package.yml;
+mkdir Demos
+cd Demos
+echo "<!DOCTYPE HtMl>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>$1</title>
+    <link rel="stylesheet" src="assets/css/style.css"/>
+</head>
+<body>
+<h1>$1</h1>
+
+<script src="http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+<script src="../Source/$1.js"></script>
+<script>
+document.addEvent('domready', function() {
+    
+});
+</script>
+</body>
+</html>" >> index.html
+mkdir assets
+cd assets
+mkdir css
+cd css
+touch style.css
+cd ../..
+echo "Bravo\! Done\!"
 git remote add origin git@github.com:jnbdz/$1.git
